@@ -11,6 +11,17 @@ def save_data_to_file(name, data_list):
         datafile.write(data_list + '\n')
 
 
+def resave_data_f(name, data_list):  # просто затер и поверх написал
+    with open(name, 'w', encoding='utf8') as datafile:
+        for row in data_list:
+            for element in row:
+                if (row.index(element) == len(row)-1):
+                    datafile.write(element)
+                else:
+                    datafile.write(element+',')
+            datafile.write('\n')
+
+
 def print_bus():
     return read_data_from_file('bus.txt')
 
@@ -46,11 +57,9 @@ def add_driver():
 
 def print_route(find_number):
     result_data = []
-    srach_index = None
-    route_data = read_data_from_file('route.txt')
-    for row in route_data:
-        if (int(row[1]) == find_number):
-            srach_index = route_data.index(row)
+    tmp_data = find_for_number_route(find_number)
+    srach_index = tmp_data[0]
+    route_data = tmp_data[1]
     if (srach_index == None):
         print("Маршрут не найден")
         result_data.append(["нет информации"])
@@ -76,4 +85,24 @@ def add_route():
 
 
 def wait_answer():
-    input("нажмите ввод для продолжения")
+    input("нажмите ввод для продолжения ")
+
+
+def del_route(find_number):
+    tmp_data = find_for_number_route(find_number)
+    try:
+        tmp_data[1].pop(tmp_data[0])
+        resave_data_f('route.txt', tmp_data[1])
+    except:
+        print("нет такого маршрута")
+
+# вроде как у пользователя врд ли есть информация о ID, поэтому ищи по номеру
+
+
+def find_for_number_route(find_number):
+    srach_index = None
+    route_data = read_data_from_file('route.txt')
+    for row in route_data:
+        if (int(row[1]) == find_number):
+            srach_index = route_data.index(row)
+    return srach_index, route_data

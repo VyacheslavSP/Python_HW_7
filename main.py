@@ -22,7 +22,7 @@ while (True):
         print(i[0], i[1])
     while (True):
         try:
-            # не ну хоть минимальную валидацию то сделать можно же? а то через символы и If как то совсем страшно
+            # минимум проверки ввода
             text = int(input("Введите номер: "))
             if (not (1 <= text <= 8)):
                 raise
@@ -48,6 +48,6 @@ while (True):
         case 6:
             fn.add_route()
         case 7:
-            print("111")
+            fn.del_route(int(input("Введите номер маршрута :")))
         case 8:
             break
